@@ -24,7 +24,8 @@ pipeline {
       }
       steps {
         dir("infra/${COMPONENT}/env/${ENV}") {
-          withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Terraform-Execution']]) {
+          withCredentials([file(credentialsId: 'GCP-credentials-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          // withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Terraform-Execution']]) {
           // withEnv(['AWS_PROFILE=AdministratorAccessExceptIAM-680159267871']) { // use profile with custom SSO session and command: aws sso login --sso-session AWS-Avenga-Education-SSO
             echo 'Plan to create Terraform resources...'
             script {
@@ -49,7 +50,8 @@ pipeline {
       }
       steps {
         dir("infra/${COMPONENT}/env/${ENV}") {
-          withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Terraform-Execution']]) {
+          withCredentials([file(credentialsId: 'GCP-credentials-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          // withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Terraform-Execution']]) {
             echo 'Create Terraform resources...'
             script {
             sh '''
@@ -69,7 +71,8 @@ pipeline {
       }
       steps {
         dir("infra/${COMPONENT}/env/${ENV}") {
-          withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Terraform-Execution']]) {
+          withCredentials([file(credentialsId: 'GCP-credentials-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          // withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Terraform-Execution']]) {
             echo 'Destroy Terraform resources...'
             script {
             sh '''
