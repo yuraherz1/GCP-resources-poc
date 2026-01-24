@@ -26,10 +26,10 @@ module "mysql_db" {
 resource "google_dns_managed_zone" "mysql_private_zone" {
   name        = "sql-zone3"
   dns_name    = module.mysql_db.mysql_dns_name
-  description = "Example private DNS zone"
-  labels = {
-    foo = "bar"
-  }
+  description = "zone to connect to cloud sql in different vpc"
+  # labels = {
+  #   foo = "foo"
+  # }
 
   visibility = "private"
 
