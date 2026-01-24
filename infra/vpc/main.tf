@@ -105,7 +105,7 @@ resource "google_dns_managed_zone" "mysql_private_zone_qa" {
 
   private_visibility_config {
     networks {
-      network_url = data.google_compute_network.existing_network_qa.self_link
+      network_url = "projects/infra-demo-qa/global/networks/default" #data.google_compute_network.existing_network_qa.self_link
     }
   }
 }
