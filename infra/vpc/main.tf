@@ -93,36 +93,36 @@ resource "google_compute_forwarding_rule" "psc_infra_demo_qa" {
 }
 
 ### DNS
-# resource "google_dns_managed_zone" "mysql_private_zone_qa" {
-#   name        = "sql-zone3"
-#   project     = "infra-demo-qa"
-#   dns_name    = module.mysql_db.mysql_dns_name
-#   description = "zone to connect to cloud sql in different vpc"
-#   # labels = {
-#   #   foo = "foo"
-#   # }
-#   visibility = "private"
+resource "google_dns_managed_zone" "mysql_private_zone_qa" {
+  name        = "sql-zone3"
+  project     = "infra-demo-qa"
+  dns_name    = module.mysql_db.mysql_dns_name
+  description = "zone to connect to cloud sql in different vpc"
+  # labels = {
+  #   foo = "foo"
+  # }
+  visibility = "private"
 
-#   private_visibility_config {
-#     networks {
-#       network_url = "projects/infra-demo-qa/global/networks/default" #data.google_compute_network.existing_network_qa.self_link
-#     }
-#   }
-# }
+  private_visibility_config {
+    networks {
+      network_url = data.google_compute_network.existing_network_qa.self_link
+    }
+  }
+}
 
 # import {
 #   id = "projects/infra-demo-dev/managedZones/sql-zone3"
 #   to = google_dns_managed_zone.mysql_private_zone
 # }
 
-# resource "google_dns_record_set" "mysql_private_zone_qa" {
-#   project      = "infra-demo-qa"
-#   managed_zone = google_dns_managed_zone.mysql_private_zone_qa.name
-#   name         = module.mysql_db.mysql_dns_name
-#   type         = "A"
-#   ttl          = 300
-#   rrdatas      = ["10.186.0.15"] #10.186.0.6 qa: 10.186.0.5
-# }
+resource "google_dns_record_set" "mysql_private_zone_qa" {
+  project      = "infra-demo-qa"
+  managed_zone = google_dns_managed_zone.mysql_private_zone_qa.name
+  name         = module.mysql_db.mysql_dns_name
+  type         = "A"
+  ttl          = 300
+  rrdatas      = ["10.186.0.15"] #10.186.0.6 qa: 10.186.0.5
+}
 
 
 
