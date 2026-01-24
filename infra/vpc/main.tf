@@ -50,7 +50,7 @@ resource "google_dns_record_set" "mysql_private_zone" {
   name         = module.mysql_db.mysql_dns_name
   type         = "A"
   ttl          = 300
-  rrdatas      = ["10.0.1.5"]
+  rrdatas      = [module.mysql_db.ip_address_psc_endpoint] #10.186.0.6
 }
 
 
