@@ -13,7 +13,7 @@ resource "google_sql_database_instance" "main" {
 
       psc_config {
         psc_enabled               = true
-        allowed_consumer_projects = [infra-demo-dev]
+        allowed_consumer_projects = ["infra-demo-dev"]
         network_attachment_uri    = null
 
         # psc_auto_connections {
