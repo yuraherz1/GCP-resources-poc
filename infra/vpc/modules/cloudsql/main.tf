@@ -1,5 +1,6 @@
 
 resource "google_sql_database_instance" "main" {
+  project          = "infra-demo-dev"
   name             = "mysql-test-default"
   database_version = "MYSQL_8_0"
   settings {
@@ -11,10 +12,10 @@ resource "google_sql_database_instance" "main" {
       }
       ipv4_enabled = false
     }
-    backup_configuration {
-      enabled            = true
-      binary_log_enabled = true
-    }
+    # backup_configuration {
+    #   enabled            = true
+    #   binary_log_enabled = true
+    # }
     availability_type = "REGIONAL"
   }
 }
