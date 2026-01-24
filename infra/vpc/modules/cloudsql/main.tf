@@ -9,6 +9,8 @@ resource "google_sql_database_instance" "main" {
     availability_type = "REGIONAL"
 
     ip_configuration {
+      ipv4_enabled = false
+
       psc_config {
         psc_enabled               = true
         allowed_consumer_projects = []
