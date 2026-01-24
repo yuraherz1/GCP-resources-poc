@@ -16,15 +16,15 @@ resource "google_sql_database_instance" "main" {
         allowed_consumer_projects = []
         network_attachment_uri    = null
 
-        psc_auto_connections {
-          consumer_network            = "projects/infra-demo-qa/global/networks/default"
-          consumer_service_project_id = "infra-demo-qa"
-        }
+        # psc_auto_connections {
+        #   consumer_network            = "projects/infra-demo-qa/global/networks/default"
+        #   consumer_service_project_id = "infra-demo-qa"
+        # }
 
-        psc_auto_connections {
-          consumer_network            = "projects/infra-demo-dev/global/networks/default"
-          consumer_service_project_id = "infra-demo-dev"
-        }
+        # psc_auto_connections {
+        #   consumer_network            = "projects/infra-demo-dev/global/networks/default"
+        #   consumer_service_project_id = "infra-demo-dev"
+        # }
       }
     }
   }
