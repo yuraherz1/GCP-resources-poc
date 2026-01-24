@@ -1,3 +1,5 @@
+#allowed-consumer-project-name
+
 # variable "eks_cluster_name" {
 #   description = "The EKS Cluster Name"
 #   type        = string
