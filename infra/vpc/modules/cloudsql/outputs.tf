@@ -8,7 +8,7 @@ output "ip_psc_auto_connection" {
   # value = google_sql_database_instance.main.private_ip_address
   # value       = values(google_sql_database_instance.main)[*].settings.ip_configuration.psc_config.psc_auto_connections.ip_address
   # value = google_sql_database_instance.main.settings["ip_configuration"].psc_config.psc_auto_connections.ip_address
-  value = google_sql_database_instance.main.settings.ip_configuration[0].psc_config.psc_auto_connections.ip_address
+  value = google_sql_database_instance.main.settings[0].ip_configuration[0].psc_config.psc_auto_connections.ip_address
   # value = google_sql_database_instance.main.settings.ip_configuration.psc_config.psc_auto_connections.ip_address
   # value       = google_sql_database_instance.main.settings.ip_configuration.psc_config.psc_auto_connections.ip_address
 
