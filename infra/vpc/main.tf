@@ -7,19 +7,52 @@
 #   }
 # }
 
+# project_id  = "infra-demo-dev"
+# bucket_name = "484109-infra-demo-terraform-state"
+# region                    = var.region
+
+
 ### DB
 module "mysql_db" {
   source = "../../modules/cloudsql"
-  # project_id  = "infra-demo-dev"
-  # bucket_name = "484109-infra-demo-terraform-state"
-  # region                    = var.region
 }
 
-import {
-  id = "projects/infra-demo-dev/instances/mysql-test-default"
-  to = module.mysql_db.google_sql_database_instance.main
+# import {
+#   id = "projects/infra-demo-dev/instances/mysql-test-default"
+#   to = module.mysql_db.google_sql_database_instance.main
+# }
+
+### DNS
+resource "google_dns_managed_zone" "mysql_private_zone" {
+  name        = "sql-zone3"
+  dns_name    = module.mysql_db.mysql_dns_name
+  description = "Example private DNS zone"
+  labels = {
+    foo = "bar"
+  }
+
+  visibility = "private"
+
+  private_visibility_config {
+    networks {
+      network_url = data.google_compute_network.existing_network.self_link
+    }
+    # networks {
+    #   network_url = google_compute_network.network-2.id
+    # }
+  }
 }
 
+# resource "google_dns_record_set" "mysql_private_zone" {
+#   project      = "infra-demo-dev"
+#   managed_zone = google_dns_managed_zone.mysql_private_zone.name
+#   name         = module.mysql_db.mysql_dns_name
+#   type         = "A"
+#   ttl          = 300 # Time to live in seconds
+
+#   # List of IP addresses for the A record
+#   rrdatas      = ["10.0.1.5"]
+# }
 
 
 
