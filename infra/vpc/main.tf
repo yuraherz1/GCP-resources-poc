@@ -43,6 +43,11 @@ resource "google_dns_managed_zone" "mysql_private_zone" {
   }
 }
 
+import {
+  id = "projects/infra-demo-dev/managedZones/sql-zone3"
+  to = google_dns_managed_zone.mysql_private_zone
+}
+
 # resource "google_dns_record_set" "mysql_private_zone" {
 #   project      = "infra-demo-dev"
 #   managed_zone = google_dns_managed_zone.mysql_private_zone.name
