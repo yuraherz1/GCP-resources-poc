@@ -5,8 +5,11 @@ resource "google_sql_database_instance" "main" {
   database_version = "MYSQL_8_0"
   settings {
     # tier = "db-f1-micro"
-    tier = "db-custom-2-4096"
+    tier              = "db-custom-2-4096"
+    availability_type = "REGIONAL"
+
     ip_configuration {
+      ipv4_enabled = false
       psc_config {
         psc_enabled               = null
         allowed_consumer_projects = []
