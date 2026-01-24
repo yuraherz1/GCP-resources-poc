@@ -34,7 +34,7 @@ resource "google_compute_forwarding_rule" "psc_infra_demo" {
   name                  = "psc-sql-endpoint-infra-demo-dev"
   region                = "europe-central2"
   network               = "default"
-  ip_address            = "10.186.0.10"
+  ip_address            = google_compute_address.psc_infra_demo.self_link
   load_balancing_scheme = ""
   target                = module.mysql_db.service_attachment_url
 }
