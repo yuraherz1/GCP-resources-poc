@@ -27,7 +27,7 @@ resource "google_compute_address" "psc_infra_demo" {
   region       = "europe-central2"
   address_type = "INTERNAL"
   subnetwork   = "default"
-  # address      = "10.186.0.10"
+  address      = "10.186.0.10"
 }
 
 resource "google_compute_forwarding_rule" "psc_infra_demo" {
@@ -67,7 +67,7 @@ resource "google_dns_record_set" "mysql_private_zone" {
   name         = module.mysql_db.mysql_dns_name
   type         = "A"
   ttl          = 300
-  rrdatas      = [google_compute_address.psc_infra_demo.self_link] #10.186.0.6
+  rrdatas      = ["10.186.0.10"] #10.186.0.6
 }
 
 
