@@ -9,7 +9,9 @@
 
 ### DB
 module "mysql_db" {
-  source = "../../modules/cloudsql"
+  source      = "../../modules/cloudsql"
+  project_id  = "infra-demo-dev"
+  bucket_name = "484109-infra-demo-terraform-state"
   # data_project_id           = var.data_project_id
   # region                    = var.region
   # workflow_name             = var.workflow_name
