@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "google" {
-  project = "infra-demo-484109"
+  project = "infra-demo-dev"
   region  = "europe-central2"
   zone    = "europe-central2-a"
 }
