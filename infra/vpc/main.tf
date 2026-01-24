@@ -22,22 +22,22 @@ module "mysql_db" {
 #   to = module.mysql_db.google_sql_database_instance.main
 # }
 
-# resource "google_compute_address" "psc_infra_demo" {
-#   name         = "ip-psc-infra-demo-dev"
-#   region       = "europe-central2"
-#   address_type = "INTERNAL"
-#   subnetwork   = "default"
-#   address      = "10.186.0.10"
-# }
+resource "google_compute_address" "psc_infra_demo" {
+  name         = "ip-psc-infra-demo-dev"
+  region       = "europe-central2"
+  address_type = "INTERNAL"
+  subnetwork   = "default"
+  address      = "10.186.0.10"
+}
 
-# resource "google_compute_forwarding_rule" "psc_infra_demo" {
-#   name                  = "psc-sql-endpoint-infra-demo-dev"
-#   region                = "europe-central2"
-#   network               = "default"
-#   ip_address            = "10.186.0.10"
-#   load_balancing_scheme = ""
-#   target                = module.mysql_db.service_attachment_url
-# }
+resource "google_compute_forwarding_rule" "psc_infra_demo" {
+  name                  = "psc-sql-endpoint-infra-demo-dev"
+  region                = "europe-central2"
+  network               = "default"
+  ip_address            = "10.186.0.10"
+  load_balancing_scheme = ""
+  target                = module.mysql_db.service_attachment_url
+}
 
 ### DNS
 resource "google_dns_managed_zone" "mysql_private_zone" {
