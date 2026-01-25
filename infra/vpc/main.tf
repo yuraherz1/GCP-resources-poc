@@ -132,13 +132,13 @@ resource "google_dns_record_set" "mysql_private_zone_qa" {
 # }
 
 # Define a dedicated /28 subnet for the connector (required)
-resource "google_compute_subnetwork" "connector_subnet_qa" {
-  project       = "infra-demo-qa"
-  name          = "sub-vpc-connector-qa"
-  ip_cidr_range = "10.10.10.0/28"
-  region        = "europe-central2" # Must match the connector region
-  network       = data.google_compute_network.existing_network_qa.self_link
-}
+# resource "google_compute_subnetwork" "connector_subnet_qa" {
+#   project       = "infra-demo-qa"
+#   name          = "sub-vpc-connector-qa"
+#   ip_cidr_range = "10.10.10.0/28"
+#   region        = "europe-central2" # Must match the connector region
+#   network       = data.google_compute_network.existing_network_qa.self_link
+# }
 
 # Create the Serverless VPC Access connector
 resource "google_vpc_access_connector" "connector_qa" {
