@@ -137,7 +137,7 @@ resource "google_compute_subnetwork" "connector_subnet_qa" {
   name          = "sub-vpc-connector-qa"
   ip_cidr_range = "10.10.10.0/28"
   region        = "europe-central2" # Must match the connector region
-  network       = data.google_compute_network.existing_network_dev.self_link
+  network       = data.google_compute_network.existing_network_qa.self_link
 }
 
 # Create the Serverless VPC Access connector
