@@ -125,6 +125,40 @@ resource "google_dns_record_set" "mysql_private_zone_qa" {
 }
 
 
+# # Enable the vpcaccess API
+# resource "google_project_service" "vpcaccess_api" {
+#   service            = "vpcaccess.googleapis.com"
+#   disable_on_destroy = false
+# }
+
+# Define a dedicated /28 subnet for the connector (required)
+resource "google_compute_subnetwork" "connector_subnet_qa" {
+  project       = "infra-demo-qa"
+  name          = "sub-vpc-connector-qa"
+  ip_cidr_range = "10.10.10.0/28"
+  region        = "europe-central2" # Must match the connector region
+  network       = data.google_compute_network.existing_network_dev.self_link
+}
+
+# Create the Serverless VPC Access connector
+resource "google_vpc_access_connector" "connector_qa" {
+  provider      = google-beta # Using google-beta provider is sometimes recommended for newer features
+  project       = "infra-demo-qa"
+  name          = "vpc-connector-qa"
+  region        = "europe-central2"
+  ip_cidr_range = "10.10.10.0/28" # This must be a /28 range from the connector subnet # "10.8.0.0/28"
+  network       = "default"
+  # Alternatively, you can use the subnet field directly
+  # subnet {
+  #   name = google_compute_subnetwork.connector_subnet.name
+  #   project = "your-gcp-project-id" # Optional if subnet is in the same project
+  # }
+
+  machine_type  = "e2-micro" # Default machine type, you can specify a different one
+  min_instances = 2          # Minimum number of instances in the autoscaling group
+  max_instances = 3          # Maximum number of instances in the autoscaling group
+}
+
 
 
 
