@@ -56,36 +56,63 @@ variable "ip_configuration" {
   default = {}
 }
 
-#allowed-consumer-project-name
+### PSC
+variable "psc_project_id" {
+  description = "The Google Cloud project ID where SPC will be located"
+  type        = string
+}
 
-# variable "eks_cluster_name" {
-#   description = "The EKS Cluster Name"
-#   type        = string
-#   # default     = "k8s-kira-demo1"
-# }
+variable "psc_allocated_ip_name" {
+  description = "The IP address of the PSC"
+  type        = string
+}
 
-# variable "eks_addons_version" {
-#   description = "EKS Add-on versions, will be used in the EKS module for the cluster_addons"
-#   type        = map(string)
-# }
+variable "app_psc_allocated_ip" {
+  description = "The IP address of the PSC"
+  type        = string
+}
 
-# variable "eks_params" {
-#   description = "EKS cluster itslef parameters"
-#   type = object({
-#     cluster_endpoint_public_access = bool
-#     cluster_enabled_log_types      = list(string)
-#   })
-# }
+variable "app_psc_subnetwork" {
+  description = "The subnetwork in which to reserve the address"
+  type        = string
+}
 
-# variable "eks_managed_node_group_params" {
-#   description = "EKS Managed NodeGroups setting, one item in the map() per each dedicated NodeGroup"
-#   type = map(object({
-#     min_size                   = number
-#     max_size                   = number
-#     desired_size               = number
-#     instance_types             = list(string)
-#     capacity_type              = string
-#     taints                     = set(map(string))
-#     max_unavailable_percentage = number
-#   }))
-# }
+variable "data_psc_allocated_ip" {
+  description = "The IP address of the PSC"
+  type        = string
+}
+
+variable "data_psc_subnetwork" {
+  description = "The subnetwork in which to reserve the address"
+  type        = string
+}
+
+variable "psc_forwarding_rule_name" {
+  description = "(Required) Name of the resource for the PSC forwarding rule"
+  type        = string
+}
+
+variable "psc_target" {
+  description = "The URL of the target resource to receive the matched traffic"
+  type        = string
+}
+
+variable "psc_dns_zone_name" {
+  description = "(Required) The name of DNS zone. Must be unique within the project"
+  type        = string
+}
+
+variable "dns_name" {
+  description = "(Required) The DNS name of this managed zone, for instance: example.com"
+  type        = string
+}
+
+variable "network_url" {
+  description = "(Required) The id or fully qualified URL of the VPC network to bind to"
+  type        = string
+}
+
+variable "dns_record_name" {
+  description = "(Required) The DNS name this record set will apply to"
+  type        = string
+}
