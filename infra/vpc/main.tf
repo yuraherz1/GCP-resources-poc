@@ -1,11 +1,8 @@
-# locals {
-#   # full_cluster_name = "${var.eks_cluster_name}-${terraform.workspace}"
-
-#   tags = {
-#     Environment = terraform.workspace
-#     Terraform   = "true"
-#   }
-# }
+locals {
+  # rank_update_pub_sa_name    = "mte-rank-update-pub-sa-${var.environment}"
+  # powerbi_update_pub_sa_name = "mte-powerbi-update-pub-sa-${var.environment}"
+  # ranking_functions_sa_name  = "mte-ranking-functions-sa-${var.environment}"
+}
 
 # project_id  = "infra-demo-dev"
 # bucket_name = "484109-infra-demo-terraform-state"

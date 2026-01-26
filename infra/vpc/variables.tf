@@ -1,3 +1,45 @@
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
+variable "project_id" {
+  description = "The Google Cloud project ID where Firebase Hosting will be configured."
+  type        = string
+}
+
+variable "data_project_id" {
+  description = "The Google Cloud project ID where data workflows is stored"
+  type        = string
+}
+
+variable "region" {
+  description = "The region for Firebase and workflow"
+  type        = string
+  default     = "europe-central2"
+}
+
+###
+variable "db_name" {
+  description = "The name for Cloud SQL instance"
+  type        = string
+}
+
+variable "database_version" {
+  description = "(Required) The database version to use"
+  type        = string
+}
+
+variable "tier" {
+  description = "The tier for the Cloud SQL instance"
+  type        = string
+}
+
+variable "availability_type" {
+  description = "The availability type for the master Cloud SQL instance"
+  type        = string
+  default     = "REGIONAL"
+}
 #allowed-consumer-project-name
 
 # variable "eks_cluster_name" {

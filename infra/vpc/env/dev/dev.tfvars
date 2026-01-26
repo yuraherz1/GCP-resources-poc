@@ -1,3 +1,17 @@
+environment     = "dev"
+project_id      = "infra-demo-qa"
+data_project_id = "infra-demo-dev"
+
+db_name          = "mysql-test-default"
+database_version = "MYSQL_8_0"
+tier             = "db-custom-2-4096"
+ip_configuration = {
+  ipv4_enabled = false
+  psc_enabled = true
+  psc_allowed_consumer_projects = ["infra-demo-dev", "infra-demo-qa"]
+}
+
+
 # eks_cluster_name = "k8s-kira-demo"
 # eks_addons_version = {
 #   coredns                = ""
