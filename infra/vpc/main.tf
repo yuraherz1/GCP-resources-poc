@@ -11,7 +11,14 @@ locals {
 
 ### DB
 module "mysql_db" {
-  source = "../../modules/cloudsql"
+  source           = "../../modules/cloudsql"
+  data_project_id  = var.data_project_id
+  db_name          = var.db_name
+  database_version = var.database_version
+  #service_account_email_address =
+
+  tier              = var.tier #"db-f1-micro"
+  availability_type = var.availability_type
 }
 
 # import {
