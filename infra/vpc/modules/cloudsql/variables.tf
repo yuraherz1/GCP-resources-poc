@@ -1,22 +1,22 @@
-variable "environment" {
-  description = "Environment name"
-  type        = string
-}
+# variable "environment" {
+#   description = "Environment name"
+#   type        = string
+# }
 
-variable "project_id" {
-  description = "The Google Cloud project ID where data workflows is stored"
-  type        = string
-}
+# variable "project_id" {
+#   description = "The Google Cloud project ID where data workflows is stored"
+#   type        = string
+# }
 
 variable "data_project_id" {
   description = "The Google Cloud project ID where data workflows is stored"
   type        = string
 }
 
-variable "region" {
-  description = "The region for Firebase and workflow"
-  type        = string
-}
+# variable "region" {
+#   description = "The region for Firebase and workflow"
+#   type        = string
+# }
 
 ###
 
