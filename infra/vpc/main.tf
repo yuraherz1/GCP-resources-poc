@@ -20,31 +20,35 @@ module "mysql_db" {
 }
 
 module "mysql_psc_data" {
-  source                   = "../../modules/psc"
-  psc_project_id           = var.data_project_id
-  psc_allocated_ip_name    = "psc-postgresql-${var.data_project_id}"
-  psc_allocated_ip         = var.data_psc_allocated_ip
-  psc_subnetwork           = var.data_psc_subnetwork
-  psc_forwarding_rule_name = "psc-postgresql-${var.data_project_id}"
-  psc_target               = module.mysql_db.service_attachment_url
-  psc_dns_zone_name        = var.psc_dns_zone_name
-  dns_name                 = module.mysql_db.mysql_dns_name
-  network_url              = data.google_compute_network.existing_network_data.self_link
-  dns_record_name          = module.mysql_db.mysql_dns_name
+  source                      = "../../modules/psc"
+  region                      = var.region
+  psc_project_id              = var.data_project_id
+  psc_allocated_ip_name       = "psc-postgresql-${var.data_project_id}"
+  psc_allocated_ip            = var.data_psc_allocated_ip
+  psc_subnetwork              = var.data_psc_subnetwork
+  psc_forwarding_rule_name    = "psc-postgresql-${var.data_project_id}"
+  psc_forwarding_network_name = var.data_psc_forwarding_network
+  psc_target                  = module.mysql_db.service_attachment_url
+  psc_dns_zone_name           = var.psc_dns_zone_name
+  dns_name                    = module.mysql_db.mysql_dns_name
+  network_url                 = data.google_compute_network.existing_network_data.self_link
+  dns_record_name             = module.mysql_db.mysql_dns_name
 }
 
 module "mysql_psc_app" {
-  source                   = "../../modules/psc"
-  psc_project_id           = var.project_id
-  psc_allocated_ip_name    = "psc-postgresql-${var.project_id}"
-  psc_allocated_ip         = var.app_psc_allocated_ip
-  psc_subnetwork           = var.app_psc_subnetwork
-  psc_forwarding_rule_name = "psc-postgresql-${var.project_id}"
-  psc_target               = module.mysql_db.service_attachment_url
-  psc_dns_zone_name        = var.psc_dns_zone_name
-  dns_name                 = module.mysql_db.mysql_dns_name
-  network_url              = data.google_compute_network.existing_network_app.self_link
-  dns_record_name          = module.mysql_db.mysql_dns_name
+  source                      = "../../modules/psc"
+  region                      = var.region
+  psc_project_id              = var.project_id
+  psc_allocated_ip_name       = "psc-postgresql-${var.project_id}"
+  psc_allocated_ip            = var.app_psc_allocated_ip
+  psc_subnetwork              = var.app_psc_subnetwork
+  psc_forwarding_rule_name    = "psc-postgresql-${var.project_id}"
+  psc_forwarding_network_name = var.app_psc_forwarding_network
+  psc_target                  = module.mysql_db.service_attachment_url
+  psc_dns_zone_name           = var.psc_dns_zone_name
+  dns_name                    = module.mysql_db.mysql_dns_name
+  network_url                 = data.google_compute_network.existing_network_app.self_link
+  dns_record_name             = module.mysql_db.mysql_dns_name
 }
 #####################################################
 # import {

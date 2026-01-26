@@ -13,6 +13,10 @@ ip_configuration = {
 ###
 data_psc_subnetwork   = "default"
 data_psc_allocated_ip = "10.186.0.10"
+data_psc_forwarding_network = "default"
+
 app_psc_subnetwork    = "default"
 app_psc_allocated_ip  = "10.186.0.15"
+data_psc_forwarding_network = "default"
 psc_dns_zone_name     = "sql-zone4"
+psc_forwarding_network_name

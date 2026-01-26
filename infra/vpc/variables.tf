@@ -92,6 +92,16 @@ variable "psc_forwarding_rule_name" {
   type        = string
 }
 
+variable "data_psc_forwarding_network" {
+  description = "The network for Private Service Connect forwarding rules"
+  type        = string
+}
+
+variable "app_psc_forwarding_network" {
+  description = "The network for Private Service Connect forwarding rules"
+  type        = string
+}
+
 variable "psc_target" {
   description = "The URL of the target resource to receive the matched traffic"
   type        = string
