@@ -11,11 +11,11 @@ ip_configuration = {
   psc_allowed_consumer_projects = ["infra-demo-dev", "infra-demo-qa"]
 }
 ###
-data_psc_subnetwork   = "default"
-data_psc_allocated_ip = "10.186.0.10"
+data_psc_subnetwork         = "default"
+data_psc_allocated_ip       = "10.186.0.10"
 data_psc_forwarding_network = "default"
 
-app_psc_subnetwork    = "default"
-app_psc_allocated_ip  = "10.186.0.15"
-data_psc_forwarding_network = "default"
-psc_dns_zone_name     = "sql-zone4"
+app_psc_subnetwork         = "default"
+app_psc_allocated_ip       = "10.186.0.15"
+app_psc_forwarding_network = "default"
+psc_dns_zone_name          = "sql-zone4"
