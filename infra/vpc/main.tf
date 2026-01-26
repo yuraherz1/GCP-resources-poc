@@ -19,6 +19,11 @@ module "mysql_db" {
 
   tier              = var.tier #"db-f1-micro"
   availability_type = var.availability_type
+  ip_configuration = {
+    ipv4_enabled                  = var.ip_configuration.ipv4_enabled
+    psc_enabled                   = var.ip_configuration.psc_enabled
+    psc_allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
+  }
 }
 
 # import {

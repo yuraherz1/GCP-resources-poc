@@ -10,11 +10,11 @@ resource "google_sql_database_instance" "main" {
     availability_type = var.availability_type
 
     ip_configuration {
-      ipv4_enabled = lookup(ip_configuration.value, "ipv4_enabled", null)
+      ipv4_enabled = var.ip_configuration.ipv4_enabled
 
       psc_config {
-        psc_enabled               = lookup(ip_configuration.value, "psc_enabled", null)
-        allowed_consumer_projects = lookup(ip_configuration.value, "psc_allowed_consumer_projects", null)
+        psc_enabled               = var.ip_configuration.psc_enabled
+        allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
         # network_attachment_uri    = null
 
         # psc_auto_connections {
