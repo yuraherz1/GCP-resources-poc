@@ -50,6 +50,12 @@ module "mysql_psc_app" {
   network_url                 = data.google_compute_network.existing_network_app.self_link
   dns_record_name             = module.mysql_db.mysql_dns_name
 }
+
+module "bastion_host_data" {
+  source = "../../modules/compute"
+  # region                      = var.region
+}
+
 #####################################################
 # import {
 #   id = "projects/infra-demo-dev/instances/mysql-test-default"
