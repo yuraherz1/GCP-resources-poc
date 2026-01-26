@@ -51,11 +51,57 @@ module "mysql_psc_app" {
   dns_record_name             = module.mysql_db.mysql_dns_name
 }
 
-module "bastion_host_data" {
-  source = "../../modules/compute"
-  # region                      = var.region
+# module "bastion_host_data" {
+#   source = "../../modules/compute"
+#   # region                      = var.region
+# }
+
+resource "google_compute_instance" "main" {
+  name         = "my-instance" #var.compute_instance_name
+  machine_type = "n2-standard-2"
+  zone         = "us-central1-a"
+
+  tags = ["foo", "bar"]
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+      labels = {
+        my_label = "value"
+      }
+    }
+  }
+
+  // Local SSD disk
+  scratch_disk {
+    interface = "NVME"
+  }
+
+  network_interface {
+    network = "default"
+
+    access_config {
+      // Ephemeral public IP
+    }
+  }
+
+  metadata = {
+    foo = "bar"
+  }
+
+  metadata_startup_script = "echo hi > /test.txt"
+
+  service_account {
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    email  = google_service_account.default.email
+    scopes = ["cloud-platform"]
+  }
 }
 
+import {
+  id = "projects/infra-demo-dev/zones/europe-central2-a/instances/instance-20260126-192026"
+  to = google_compute_instance.main
+}
 #####################################################
 # import {
 #   id = "projects/infra-demo-dev/instances/mysql-test-default"
