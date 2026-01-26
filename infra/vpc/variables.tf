@@ -122,7 +122,27 @@ variable "psc_dns_zone_name" {
 #   type        = string
 # }
 
-# variable "dns_record_name" {
-#   description = "(Required) The DNS name this record set will apply to"
-#   type        = string
-# }
+variable "vpc_connector_name" {
+  description = "(Required) The DNS name this record set will apply to"
+  type        = string
+}
+
+variable "vpc_connector_ip_cidr" {
+  description = "(Required) The DNS name this record set will apply to"
+  type        = string
+}
+
+variable "vpc_connector_machine_type" {
+  description = "(Required) The DNS name this record set will apply to"
+  type        = string
+}
+
+variable "vpc_connector_max_instances" {
+  description = "(Required) The DNS name this record set will apply to"
+  type        = string
+}
+
+variable "vpc_connector_min_instances" {
+  description = "(Required) The DNS name this record set will apply to"
+  type        = string
+}

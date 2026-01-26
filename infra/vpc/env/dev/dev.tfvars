@@ -19,3 +19,12 @@ app_psc_subnetwork         = "default"
 app_psc_allocated_ip       = "10.186.0.16"
 app_psc_forwarding_network = "default"
 psc_dns_zone_name          = "sql-zone4"
+
+vpc_connector_name    = "vpc-connector-qa"
+vpc_connector_ip_cidr = "10.10.10.0/28"
+
+
+
+vpc_connector_machine_type  = "e2-micro" # Default machine type, you can specify a different one
+vpc_connector_min_instances = 1          # Minimum number of instances in the autoscaling group
+vpc_connector_max_instances = 3          # Maximum number of instances in the autoscaling group

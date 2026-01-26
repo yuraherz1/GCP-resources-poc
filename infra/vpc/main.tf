@@ -175,22 +175,22 @@ module "mysql_psc_app" {
 # }
 
 # Create the Serverless VPC Access connector
-resource "google_vpc_access_connector" "connector_qa" {
+resource "google_vpc_access_connector" "sql" {
   provider      = google-beta # Using google-beta provider is sometimes recommended for newer features
-  project       = "infra-demo-qa"
-  name          = "vpc-connector-qa"
-  region        = "europe-central2"
-  ip_cidr_range = "10.10.10.0/28" # This must be a /28 range from the connector subnet # "10.8.0.0/28"
-  network       = "default"
+  project       = var.project_id
+  name          = var.vpc_connector_name #"vpc-connector-qa"
+  region        = var.region
+  ip_cidr_range = var.vpc_connector_ip_cidr # This must be a /28 range from the connector subnet # "10.8.0.0/28"
+  network       = var.app_psc_forwarding_network
   # Alternatively, you can use the subnet field directly
   # subnet {
   #   name = google_compute_subnetwork.connector_subnet.name
   #   project = "your-gcp-project-id" # Optional if subnet is in the same project
   # }
 
-  machine_type  = "e2-micro" # Default machine type, you can specify a different one
-  min_instances = 2          # Minimum number of instances in the autoscaling group
-  max_instances = 3          # Maximum number of instances in the autoscaling group
+  machine_type  = var.vpc_connector_machine_type  #"e2-micro" # Default machine type, you can specify a different one
+  min_instances = var.vpc_connector_max_instances #1          # Minimum number of instances in the autoscaling group
+  max_instances = var.vpc_connector_min_instances #3          # Maximum number of instances in the autoscaling group
 }
 
 
