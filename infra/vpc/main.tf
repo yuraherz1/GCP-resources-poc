@@ -57,39 +57,40 @@ module "mysql_psc_app" {
 # }
 
 resource "google_compute_instance" "main" {
-  name         = "my-instance" #var.compute_instance_name
-  machine_type = "n2-standard-2"
+  project      = "infra-demo-dev"
+  name         = "instance-20260126-192026" #var.compute_instance_name
+  machine_type = "e2-custom-2-1024"
   zone         = "us-central1-a"
 
-  tags = ["foo", "bar"]
+  # tags = ["foo", "bar"]
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
-      labels = {
-        my_label = "value"
-      }
+      image = "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20260117"
+      # labels = {
+      #   my_label = "value"
+      # }
     }
   }
 
   // Local SSD disk
-  scratch_disk {
-    interface = "NVME"
-  }
+  # scratch_disk {
+  #   interface = "NVME"
+  # }
 
   network_interface {
     network = "default"
 
-    access_config {
-      // Ephemeral public IP
-    }
+    # access_config {
+    #   // Ephemeral public IP
+    # }
   }
 
-  metadata = {
-    foo = "bar"
-  }
+  # metadata = {
+  #   foo = "bar"
+  # }
 
-  metadata_startup_script = "echo hi > /test.txt"
+  # metadata_startup_script = "echo hi > /test.txt"
 
   # service_account {
   #   # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
