@@ -57,15 +57,15 @@ variable "ip_configuration" {
 }
 
 ### PSC
-variable "psc_project_id" {
-  description = "The Google Cloud project ID where SPC will be located"
-  type        = string
-}
+# variable "psc_project_id" {
+#   description = "The Google Cloud project ID where SPC will be located"
+#   type        = string
+# }
 
-variable "psc_allocated_ip_name" {
-  description = "The IP address of the PSC"
-  type        = string
-}
+# variable "psc_allocated_ip_name" {
+#   description = "The IP address of the PSC"
+#   type        = string
+# }
 
 variable "app_psc_allocated_ip" {
   description = "The IP address of the PSC"
@@ -87,10 +87,10 @@ variable "data_psc_subnetwork" {
   type        = string
 }
 
-variable "psc_forwarding_rule_name" {
-  description = "(Required) Name of the resource for the PSC forwarding rule"
-  type        = string
-}
+# variable "psc_forwarding_rule_name" {
+#   description = "(Required) Name of the resource for the PSC forwarding rule"
+#   type        = string
+# }
 
 variable "data_psc_forwarding_network" {
   description = "The network for Private Service Connect forwarding rules"
@@ -102,27 +102,27 @@ variable "app_psc_forwarding_network" {
   type        = string
 }
 
-variable "psc_target" {
-  description = "The URL of the target resource to receive the matched traffic"
-  type        = string
-}
+# variable "psc_target" {
+#   description = "The URL of the target resource to receive the matched traffic"
+#   type        = string
+# }
 
 variable "psc_dns_zone_name" {
   description = "(Required) The name of DNS zone. Must be unique within the project"
   type        = string
 }
 
-variable "dns_name" {
-  description = "(Required) The DNS name of this managed zone, for instance: example.com"
-  type        = string
-}
+# variable "dns_name" {
+#   description = "(Required) The DNS name of this managed zone, for instance: example.com"
+#   type        = string
+# }
 
-variable "network_url" {
-  description = "(Required) The id or fully qualified URL of the VPC network to bind to"
-  type        = string
-}
+# variable "network_url" {
+#   description = "(Required) The id or fully qualified URL of the VPC network to bind to"
+#   type        = string
+# }
 
-variable "dns_record_name" {
-  description = "(Required) The DNS name this record set will apply to"
-  type        = string
-}
+# variable "dns_record_name" {
+#   description = "(Required) The DNS name this record set will apply to"
+#   type        = string
+# }
