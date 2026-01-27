@@ -1,17 +1,17 @@
 environment     = "dev"
 project_id      = "infra-demo-qa"
 data_project_id = "infra-demo-dev"
-####
-db_name          = "postgres-test-default" #"mysql-test-default"
+#### DB
+db_name          = "mte-data-dev"
 database_version = "POSTGRES_18"           #"MYSQL_8_0"
 disk_size        = "15"
-tier             = "db-f1-micro" #"db-custom-2-4096"
+tier             = "db-g1-small" #"db-f1-micro" #"db-custom-2-4096"
 ip_configuration = {
   ipv4_enabled                  = false
   psc_enabled                   = true
   psc_allowed_consumer_projects = ["infra-demo-dev", "infra-demo-qa"]
 }
-###
+### PSC
 data_psc_subnetwork         = "default"
 data_psc_allocated_ip       = "10.186.0.11"
 data_psc_forwarding_network = "default"

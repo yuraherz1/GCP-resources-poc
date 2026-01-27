@@ -19,7 +19,7 @@ variable "region" {
   default     = "europe-central2"
 }
 
-###
+### DB
 variable "db_name" {
   description = "The name for Cloud SQL instance"
   type        = string

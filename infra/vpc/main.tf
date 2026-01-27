@@ -27,7 +27,7 @@ module "postgres_data" {
   database_version = var.database_version
   #service_account_email_address =
 
-  tier              = var.tier #"db-f1-micro"
+  tier              = var.tier
   availability_type = var.availability_type
   disk_size         = var.disk_size
   ip_configuration = {
