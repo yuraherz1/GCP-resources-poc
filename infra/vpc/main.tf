@@ -91,7 +91,7 @@ resource "google_sql_database_instance" "main_instance" {
     # Second-generation instance tiers are based on machine type (e.g., db-f1-micro, db-n1-standard-1).
     tier              = "db-f1-micro" #db-f1-micro db-custom-2-4096
     availability_type = "REGIONAL"
-    disk_size         = "15GB"
+    disk_size         = 15
     # ip_configuration {
     #   ipv4_enabled = var.ip_configuration.ipv4_enabled
 
