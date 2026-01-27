@@ -58,51 +58,80 @@ module "mysql_psc_app" {
 
 resource "google_compute_instance" "main" {
   project      = "infra-demo-dev"
-  name         = "instance-20260126-192026" #var.compute_instance_name
-  machine_type = "e2-custom-2-1024"
-  zone         = "us-central1-a"
-
-  # tags = ["foo", "bar"]
+  name         = "tf-instance-via-resource"
+  machine_type = "e2-medium"
+  zone         = "europe-central2-a"
 
   boot_disk {
     initialize_params {
-      image = "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20260117"
-      # labels = {
-      #   my_label = "value"
-      # }
+      image = "debian-cloud/debian-12"
+      size  = 10
+      type  = "pd-balanced"
     }
   }
 
-  // Local SSD disk
-  # scratch_disk {
-  #   interface = "NVME"
-  # }
-
   network_interface {
     network = "default"
-
-    # access_config {
-    #   // Ephemeral public IP
-    # }
+    access_config {
+      # This block assigns an ephemeral external IP address
+    }
   }
 
-  # metadata = {
-  #   foo = "bar"
-  # }
-
-  # metadata_startup_script = "echo hi > /test.txt"
-
-  # service_account {
-  #   # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-  #   email  = google_service_account.default.email
-  #   scopes = ["cloud-platform"]
-  # }
+  # Optional: apply tags to the instance for firewall rules
+  # tags = ["web-server", "allow-http"]
 }
 
-import {
-  id = "projects/infra-demo-dev/zones/europe-central2-a/instances/instance-20260126-192026"
-  to = google_compute_instance.main
-}
+# resource "google_compute_instance" "main" {
+#   project      = "infra-demo-dev"
+#   name         = "instance-20260126-192026" #var.compute_instance_name
+#   machine_type = "e2-custom-2-1024"
+#   zone         = "europe-central2-a"
+
+#   # tags = ["foo", "bar"]
+
+#   boot_disk {
+#     initialize_params {
+#       image = "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20260117"
+#       # labels = {
+#       #   my_label = "value"
+#       # }
+#     }
+#   }
+
+#   // Local SSD disk
+#   # scratch_disk {
+#   #   interface = "NVME"
+#   # }
+
+#   network_interface {
+#     network = "default"
+
+#     access_config {
+#       // Ephemeral public IP
+#     }
+#   }
+
+#   metadata                   = {
+
+#     "enable-osconfig" = "TRUE"
+#   }
+#   # metadata = {
+#   #   foo = "bar"
+#   # }
+
+#   # metadata_startup_script = "echo hi > /test.txt"
+
+#   # service_account {
+#   #   # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+#   #   email  = google_service_account.default.email
+#   #   scopes = ["cloud-platform"]
+#   # }
+# }
+
+# import {
+#   id = "projects/infra-demo-dev/zones/europe-central2-a/instances/instance-20260126-192026"
+#   to = google_compute_instance.main
+# }
 #####################################################
 # import {
 #   id = "projects/infra-demo-dev/instances/mysql-test-default"
