@@ -30,7 +30,6 @@ module "postgres_data" {
   #service_account_email_address =
 
   tier              = var.tier
-  edition           = var.db_edition
   availability_type = var.availability_type
   disk_size         = var.disk_size
   ip_configuration = {
