@@ -30,8 +30,18 @@ variable "database_version" {
   type        = string
 }
 
+variable "db_edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS"
+  type        = string
+}
+
 variable "tier" {
   description = "The tier for the Cloud SQL instance"
+  type        = string
+}
+
+variable "db_user_name" {
+  description = "The username of Cloud SQL instance"
   type        = string
 }
 

@@ -24,10 +24,12 @@ module "postgres_data" {
   data_project_id  = var.data_project_id
   region           = var.region
   db_name          = var.db_name
+  db_user_name     = var.db_user_name
   database_version = var.database_version
   #service_account_email_address =
 
   tier              = var.tier
+  edition           = var.db_edition
   availability_type = var.availability_type
   disk_size         = var.disk_size
   ip_configuration = {

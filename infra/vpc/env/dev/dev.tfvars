@@ -3,9 +3,11 @@ project_id      = "infra-demo-qa"
 data_project_id = "infra-demo-dev"
 #### DB
 db_name          = "postgres-test-default" # mte-data-dev
-database_version = "POSTGRES_18"           #"MYSQL_8_0"
+db_user_name     = "mte"
+database_version = "POSTGRES_18" #"MYSQL_8_0"
 disk_size        = "15"
 tier             = "db-f1-micro" #"db-f1-micro" #"db-custom-2-4096" db-g1-small
+db_edition       = "ENTERPRISE"
 ip_configuration = {
   ipv4_enabled                  = false
   psc_enabled                   = true
