@@ -20,7 +20,7 @@ app_psc_allocated_ip       = "10.186.0.16"
 app_psc_forwarding_network = "default"
 psc_dns_zone_name          = "sql-zone4"
 
-vpc_connector_name    = "vpc-connector-infra-demo-qa"
+vpc_connector_name    = "vpc-connector-qa"
 vpc_connector_ip_cidr = "10.10.10.0/28"
 
 

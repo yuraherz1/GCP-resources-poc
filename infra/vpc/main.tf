@@ -81,6 +81,28 @@ resource "google_compute_instance" "main" {
   # tags = ["web-server", "allow-http"]
 }
 
+
+resource "google_sql_database_instance" "main_instance" {
+  name             = "postgresql-test-dev"
+  database_version = "POSTGRES_18"
+  region           = "europe-central2"
+
+  settings {
+    # Second-generation instance tiers are based on machine type (e.g., db-f1-micro, db-n1-standard-1).
+    tier              = "db-f1-micro" #db-f1-micro db-custom-2-4096
+    availability_type = "REGIONAL"
+    disk_size         = "15GB"
+    # ip_configuration {
+    #   ipv4_enabled = var.ip_configuration.ipv4_enabled
+
+    #   psc_config {
+    #     psc_enabled               = var.ip_configuration.psc_enabled
+    #     allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
+    #   }
+    # }
+  }
+}
+
 # resource "google_compute_instance" "main" {
 #   project      = "infra-demo-dev"
 #   name         = "instance-20260126-192026" #var.compute_instance_name
