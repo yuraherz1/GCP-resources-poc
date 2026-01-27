@@ -22,6 +22,7 @@ locals {
 module "postgres_data" {
   source           = "../../modules/cloudsql-postgres"
   data_project_id  = var.data_project_id
+  region           = var.region
   db_name          = var.db_name
   database_version = var.database_version
   #service_account_email_address =
