@@ -77,12 +77,12 @@ module "postgres_psc_app" {
 resource "google_compute_instance" "main" {
   project      = "infra-demo-dev"
   name         = "tf-instance-via-resource"
-  machine_type = "e2-medium"
+  machine_type = "e2-small"
   zone         = "europe-central2-a"
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-12"
+      image = "ubuntu-os-cloud/ubuntu-2404-lts"
       size  = 10
       type  = "pd-balanced"
     }
