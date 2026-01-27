@@ -77,7 +77,7 @@ module "postgres_psc_app" {
 resource "google_compute_instance" "main" {
   project      = "infra-demo-dev"
   name         = "tf-instance-via-resource"
-  machine_type = "e2-small"
+  machine_type = "e2-micro"
   zone         = "europe-central2-a"
 
   boot_disk {
