@@ -1,5 +1,5 @@
-variable "data_project_id" {
-  description = "The Google Cloud project ID where data workflows is stored"
+variable "project" {
+  description = "The ID of the project in which the resource belongs"
   type        = string
 }
 

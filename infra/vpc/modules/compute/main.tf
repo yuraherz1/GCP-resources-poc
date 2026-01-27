@@ -1,5 +1,5 @@
 resource "google_compute_instance" "main" {
-  project      = var.data_project_id
+  project      = var.project
   name         = var.instance_name
   machine_type = var.instance_type
   zone         = var.instance_zone

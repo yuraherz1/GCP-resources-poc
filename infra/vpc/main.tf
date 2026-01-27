@@ -73,6 +73,7 @@ module "postgres_psc_app" {
 
 module "bastion_host_data" {
   source             = "../../modules/compute"
+  project            = var.data_project_id
   instance_name      = var.instance_name
   instance_type      = var.instance_type
   instance_zone      = var.instance_zone
@@ -84,7 +85,6 @@ module "bastion_host_data" {
 
 # Create the Serverless VPC Access connector
 resource "google_vpc_access_connector" "sql" {
-  provider      = "google-beta"
   region        = var.region
   project       = var.project_id
   name          = var.vpc_connector_name
