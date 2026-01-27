@@ -3,8 +3,24 @@ locals {
 }
 
 ### DB
-module "mysql_db" {
-  source           = "../../modules/cloudsql"
+# module "mysql_db" {
+#   source           = "../../modules/cloudsql"
+#   data_project_id  = var.data_project_id
+#   db_name          = var.db_name
+#   database_version = var.database_version
+#   #service_account_email_address =
+
+#   tier              = var.tier #"db-f1-micro"
+#   availability_type = var.availability_type
+#   ip_configuration = {
+#     ipv4_enabled                  = var.ip_configuration.ipv4_enabled
+#     psc_enabled                   = var.ip_configuration.psc_enabled
+#     psc_allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
+#   }
+# }
+
+module "postgres_data" {
+  source           = "../../modules/cloudsql-postgres"
   data_project_id  = var.data_project_id
   db_name          = var.db_name
   database_version = var.database_version
@@ -12,6 +28,7 @@ module "mysql_db" {
 
   tier              = var.tier #"db-f1-micro"
   availability_type = var.availability_type
+  disk_size         = var.disk_size
   ip_configuration = {
     ipv4_enabled                  = var.ip_configuration.ipv4_enabled
     psc_enabled                   = var.ip_configuration.psc_enabled
@@ -19,7 +36,7 @@ module "mysql_db" {
   }
 }
 
-module "mysql_psc_data" {
+module "postgres_psc_data" {
   source                      = "../../modules/psc"
   region                      = var.region
   psc_project_id              = var.data_project_id
@@ -28,14 +45,14 @@ module "mysql_psc_data" {
   psc_subnetwork              = var.data_psc_subnetwork
   psc_forwarding_rule_name    = "psc-postgresql-${var.data_project_id}"
   psc_forwarding_network_name = var.data_psc_forwarding_network
-  psc_target                  = module.mysql_db.service_attachment_url
+  psc_target                  = module.postgres_data.service_attachment_url
   psc_dns_zone_name           = var.psc_dns_zone_name
-  dns_name                    = module.mysql_db.mysql_dns_name
+  dns_name                    = module.postgres_data.db_dns_name
   network_url                 = data.google_compute_network.existing_network_data.self_link
-  dns_record_name             = module.mysql_db.mysql_dns_name
+  dns_record_name             = module.postgres_data.db_dns_name
 }
 
-module "mysql_psc_app" {
+module "postgres_psc_app" {
   source                      = "../../modules/psc"
   region                      = var.region
   psc_project_id              = var.project_id
@@ -44,11 +61,11 @@ module "mysql_psc_app" {
   psc_subnetwork              = var.app_psc_subnetwork
   psc_forwarding_rule_name    = "psc-postgresql-${var.project_id}"
   psc_forwarding_network_name = var.app_psc_forwarding_network
-  psc_target                  = module.mysql_db.service_attachment_url
+  psc_target                  = module.postgres_data.service_attachment_url
   psc_dns_zone_name           = var.psc_dns_zone_name
-  dns_name                    = module.mysql_db.mysql_dns_name
+  dns_name                    = module.postgres_data.db_dns_name
   network_url                 = data.google_compute_network.existing_network_app.self_link
-  dns_record_name             = module.mysql_db.mysql_dns_name
+  dns_record_name             = module.postgres_data.db_dns_name
 }
 
 # module "bastion_host_data" {
@@ -82,27 +99,27 @@ resource "google_compute_instance" "main" {
 }
 
 
-resource "google_sql_database_instance" "main_instance" {
-  name             = "postgresql-test-dev"
-  database_version = "POSTGRES_18"
-  region           = "europe-central2"
+# resource "google_sql_database_instance" "main_instance" {
+#   name             = "postgresql-test-dev"
+#   database_version = "POSTGRES_18"
+#   region           = "europe-central2"
 
-  settings {
-    # Second-generation instance tiers are based on machine type (e.g., db-f1-micro, db-n1-standard-1).
-    tier              = "db-custom-2-4096" #db-f1-micro db-custom-2-4096
-    edition           = "ENTERPRISE"
-    availability_type = "REGIONAL"
-    disk_size         = 15
-    # ip_configuration {
-    #   ipv4_enabled = var.ip_configuration.ipv4_enabled
+#   settings {
+#     # Second-generation instance tiers are based on machine type (e.g., db-f1-micro, db-n1-standard-1).
+#     tier              = "db-custom-2-4096" #db-f1-micro db-custom-2-4096
+#     edition           = "ENTERPRISE"
+#     availability_type = "REGIONAL"
+#     disk_size         = 15
+#     # ip_configuration {
+#     #   ipv4_enabled = var.ip_configuration.ipv4_enabled
 
-    #   psc_config {
-    #     psc_enabled               = var.ip_configuration.psc_enabled
-    #     allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
-    #   }
-    # }
-  }
-}
+#     #   psc_config {
+#     #     psc_enabled               = var.ip_configuration.psc_enabled
+#     #     allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
+#     #   }
+#     # }
+#   }
+# }
 
 # resource "google_compute_instance" "main" {
 #   project      = "infra-demo-dev"

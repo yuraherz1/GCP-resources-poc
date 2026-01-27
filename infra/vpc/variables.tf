@@ -56,6 +56,11 @@ variable "ip_configuration" {
   default = {}
 }
 
+variable "disk_size" {
+  description = "The tier for the master Cloud SQL instance"
+  type        = string
+}
+
 ### PSC
 # variable "psc_project_id" {
 #   description = "The Google Cloud project ID where SPC will be located"

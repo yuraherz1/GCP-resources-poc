@@ -2,9 +2,10 @@ environment     = "dev"
 project_id      = "infra-demo-qa"
 data_project_id = "infra-demo-dev"
 ####
-db_name          = "mysql-test-default"
-database_version = "MYSQL_8_0"
-tier             = "db-custom-2-4096"
+db_name          = "postgres-test-default" #"mysql-test-default"
+database_version = "POSTGRES_18"           #"MYSQL_8_0"
+disk_size        = "15"
+tier             = "db-f1-micro" #"db-custom-2-4096"
 ip_configuration = {
   ipv4_enabled                  = false
   psc_enabled                   = true
