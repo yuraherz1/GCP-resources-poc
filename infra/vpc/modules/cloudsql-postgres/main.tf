@@ -51,9 +51,9 @@ resource "google_sql_database_instance" "main" {
   }
 }
 
-resource "google_sql_user" "users" {
-  project  = var.data_project_id
-  name     = var.db_user_name
-  instance = google_sql_database_instance.main.name
-  password = random_password.db_password.result
-}
+#resource "google_sql_user" "users" {
+#  project  = var.data_project_id
+#  name     = var.db_user_name
+#  instance = google_sql_database_instance.main.name
+#  password = random_password.db_password.result
+#}
