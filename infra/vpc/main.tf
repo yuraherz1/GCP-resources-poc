@@ -89,7 +89,7 @@ resource "google_sql_database_instance" "main_instance" {
 
   settings {
     # Second-generation instance tiers are based on machine type (e.g., db-f1-micro, db-n1-standard-1).
-    tier              = "db-f1-micro" #db-f1-micro db-custom-2-4096
+    tier              = "db-custom-2-4096" #db-f1-micro db-custom-2-4096
     availability_type = "REGIONAL"
     disk_size         = 15
     # ip_configuration {
@@ -293,8 +293,8 @@ resource "google_vpc_access_connector" "sql" {
   # }
 
   machine_type  = var.vpc_connector_machine_type  #"e2-micro" # Default machine type, you can specify a different one
-  min_instances = var.vpc_connector_max_instances #1          # Minimum number of instances in the autoscaling group
-  max_instances = var.vpc_connector_min_instances #3          # Maximum number of instances in the autoscaling group
+  min_instances = var.vpc_connector_min_instances #1          # Minimum number of instances in the autoscaling group
+  max_instances = var.vpc_connector_max_instances #3          # Maximum number of instances in the autoscaling group
 }
 
 
