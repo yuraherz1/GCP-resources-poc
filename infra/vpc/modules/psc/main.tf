@@ -1,6 +1,6 @@
 resource "google_compute_address" "psc_allocate_ip" {
   name         = var.psc_allocated_ip_name
-  project      = var.psc_project_id
+  project      = var.project
   region       = var.region
   address_type = "INTERNAL"
   subnetwork   = var.psc_subnetwork
@@ -9,7 +9,7 @@ resource "google_compute_address" "psc_allocate_ip" {
 
 resource "google_compute_forwarding_rule" "psc_allocate_ip" {
   name                  = var.psc_forwarding_rule_name
-  project               = var.psc_project_id
+  project               = var.project
   region                = var.region
   network               = var.psc_forwarding_network_name
   ip_address            = google_compute_address.psc_allocate_ip.self_link
@@ -19,7 +19,7 @@ resource "google_compute_forwarding_rule" "psc_allocate_ip" {
 
 resource "google_dns_managed_zone" "psc_allocate_ip" {
   name        = var.psc_dns_zone_name
-  project     = var.psc_project_id
+  project     = var.project
   dns_name    = var.dns_name
   description = "The DNS zone to connect to Cloud SQL"
   visibility  = "private"
@@ -32,7 +32,7 @@ resource "google_dns_managed_zone" "psc_allocate_ip" {
 }
 
 resource "google_dns_record_set" "psc_allocate_ip" {
-  project      = var.psc_project_id
+  project      = var.project
   managed_zone = google_dns_managed_zone.psc_allocate_ip.name
   name         = var.dns_record_name
   type         = "A"

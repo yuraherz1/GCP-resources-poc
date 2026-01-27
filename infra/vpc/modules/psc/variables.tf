@@ -3,8 +3,8 @@ variable "region" {
   type        = string
 }
 
-variable "psc_project_id" {
-  description = "The Google Cloud project ID where SPC will be located"
+variable "project" {
+  description = "The ID of the project in which the resource belongs"
   type        = string
 }
 

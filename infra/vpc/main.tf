@@ -1,5 +1,5 @@
 locals {
-  # rank_update_pub_sa_name    = "mte-rank-update-pub-sa-${var.environment}"
+  psc_resources_name = "mte-psc-postgres-data-${var.environment}"
 }
 
 ### DB
@@ -21,7 +21,7 @@ locals {
 
 module "postgres_data" {
   source           = "../../modules/cloudsql-postgres"
-  data_project_id  = var.data_project_id
+  project          = var.data_project_id
   region           = var.region
   db_name          = var.db_name
   db_user_name     = var.db_user_name
@@ -42,11 +42,11 @@ module "postgres_data" {
 module "postgres_psc_data" {
   source                      = "../../modules/psc"
   region                      = var.region
-  psc_project_id              = var.data_project_id
-  psc_allocated_ip_name       = "psc-postgresql-${var.data_project_id}"
+  project                     = var.data_project_id
+  psc_allocated_ip_name       = local.psc_resources_name
   psc_allocated_ip            = var.data_psc_allocated_ip
   psc_subnetwork              = var.data_psc_subnetwork
-  psc_forwarding_rule_name    = "psc-postgresql-${var.data_project_id}"
+  psc_forwarding_rule_name    = local.psc_resources_name
   psc_forwarding_network_name = var.data_psc_forwarding_network
   psc_target                  = module.postgres_data.service_attachment_url
   psc_dns_zone_name           = var.psc_dns_zone_name
@@ -58,11 +58,11 @@ module "postgres_psc_data" {
 module "postgres_psc_app" {
   source                      = "../../modules/psc"
   region                      = var.region
-  psc_project_id              = var.project_id
-  psc_allocated_ip_name       = "psc-postgresql-${var.project_id}"
+  project                     = var.project_id
+  psc_allocated_ip_name       = local.psc_resources_name
   psc_allocated_ip            = var.app_psc_allocated_ip
   psc_subnetwork              = var.app_psc_subnetwork
-  psc_forwarding_rule_name    = "psc-postgresql-${var.project_id}"
+  psc_forwarding_rule_name    = local.psc_resources_name
   psc_forwarding_network_name = var.app_psc_forwarding_network
   psc_target                  = module.postgres_data.service_attachment_url
   psc_dns_zone_name           = var.psc_dns_zone_name
@@ -71,35 +71,54 @@ module "postgres_psc_app" {
   dns_record_name             = module.postgres_data.db_dns_name
 }
 
-# module "bastion_host_data" {
-#   source = "../../modules/compute"
-#   # region                      = var.region
-# }
-
-resource "google_compute_instance" "main" {
-  project      = "infra-demo-dev"
-  name         = "tf-instance-via-resource"
-  machine_type = "e2-micro"
-  zone         = "europe-central2-a"
-
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2404-lts-amd64"
-      size  = 10
-      type  = "pd-balanced"
-    }
-  }
-
-  network_interface {
-    network = "default"
-    access_config {
-      # This block assigns an ephemeral external IP address
-    }
-  }
-
-  # Optional: apply tags to the instance for firewall rules
-  # tags = ["web-server", "allow-http"]
+module "bastion_host_data" {
+  source             = "../../modules/compute"
+  instance_name      = var.instance_name
+  instance_type      = var.instance_type
+  instance_zone      = var.instance_zone
+  instance_image     = var.instance_image
+  instance_disk_size = var.instance_disk_size
+  instance_disk_type = var.instance_disk_type
+  instance_network   = var.instance_network
 }
+
+# Create the Serverless VPC Access connector
+resource "google_vpc_access_connector" "sql" {
+  provider      = "google-beta"
+  region        = var.region
+  project       = var.project_id
+  name          = var.vpc_connector_name
+  ip_cidr_range = var.vpc_connector_ip_cidr
+  network       = var.app_psc_forwarding_network
+  machine_type  = var.vpc_connector_machine_type
+  min_instances = var.vpc_connector_min_instances
+  max_instances = var.vpc_connector_max_instances
+}
+
+# resource "google_compute_instance" "main" {
+#   project      = "infra-demo-dev"
+#   name         = "tf-instance-via-resource"
+#   machine_type = "e2-micro"
+#   zone         = "europe-central2-a"
+
+#   boot_disk {
+#     initialize_params {
+#       image = "ubuntu-os-cloud/ubuntu-2404-lts-amd64"
+#       size  = 10
+#       type  = "pd-balanced"
+#     }
+#   }
+
+#   network_interface {
+#     network = "default"
+#     access_config {
+#       # This block assigns an ephemeral external IP address
+#     }
+#   }
+
+#   # Optional: apply tags to the instance for firewall rules
+#   # tags = ["web-server", "allow-http"]
+# }
 
 
 # resource "google_sql_database_instance" "main_instance" {
@@ -297,58 +316,4 @@ resource "google_compute_instance" "main" {
 #   ip_cidr_range = "10.10.10.0/28"
 #   region        = "europe-central2" # Must match the connector region
 #   network       = data.google_compute_network.existing_network_qa.self_link
-# }
-
-# Create the Serverless VPC Access connector
-resource "google_vpc_access_connector" "sql" {
-  provider      = google-beta # Using google-beta provider is sometimes recommended for newer features
-  project       = var.project_id
-  name          = var.vpc_connector_name #"vpc-connector-qa"
-  region        = var.region
-  ip_cidr_range = var.vpc_connector_ip_cidr # This must be a /28 range from the connector subnet # "10.8.0.0/28"
-  network       = var.app_psc_forwarding_network
-  # Alternatively, you can use the subnet field directly
-  # subnet {
-  #   name = google_compute_subnetwork.connector_subnet.name
-  #   project = "your-gcp-project-id" # Optional if subnet is in the same project
-  # }
-
-  machine_type  = var.vpc_connector_machine_type  #"e2-micro" # Default machine type, you can specify a different one
-  min_instances = var.vpc_connector_min_instances #1          # Minimum number of instances in the autoscaling group
-  max_instances = var.vpc_connector_max_instances #3          # Maximum number of instances in the autoscaling group
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# resource "google_compute_instance" "vm_instance" {
-#   name         = "terraform-instance"
-#   machine_type = "e2-micro"
-
-#   boot_disk {
-#     initialize_params {
-#       image = "debian-cloud/debian-11"
-#     }
-#   }
-
-#   network_interface {
-#     # A default network is created for all GCP projects
-#     network = "default"
-#     access_config {
-#     }
-#   }
 # }

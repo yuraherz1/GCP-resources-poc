@@ -9,7 +9,7 @@ resource "random_password" "db_password" {
 }
 
 resource "google_secret_manager_secret" "db_secret" {
-  project   = var.data_project_id
+  project   = var.project
   secret_id = "POSTGRES_DATA_PASS"
   replication {
     auto {}
@@ -21,7 +21,7 @@ resource "google_secret_manager_secret" "db_secret" {
 }
 
 resource "google_secret_manager_secret_version" "db_secret_version" {
-  project     = var.data_project_id
+  project     = var.project
   secret      = google_secret_manager_secret.db_secret.id
   secret_data = random_password.db_password.result
 
@@ -31,14 +31,14 @@ resource "google_secret_manager_secret_version" "db_secret_version" {
 }
 
 resource "google_sql_database_instance" "main" {
-  project          = var.data_project_id
+  project          = var.project
   name             = var.db_name
   database_version = var.database_version
   region           = var.region
 
   settings {
     tier              = var.tier
-    edition           = var.db_edition #"ENTERPRISE"
+    edition           = var.db_edition
     availability_type = var.availability_type
     disk_size         = var.disk_size
     ip_configuration {
@@ -51,8 +51,8 @@ resource "google_sql_database_instance" "main" {
   }
 }
 
-resource "google_sql_user" "users" {
-  project  = var.data_project_id
+resource "google_sql_user" "default" {
+  project  = var.project
   name     = var.db_user_name
   instance = google_sql_database_instance.main.name
   password = random_password.db_password.result

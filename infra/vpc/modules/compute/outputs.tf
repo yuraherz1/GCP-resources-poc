@@ -1,4 +1,4 @@
-# output "ip_scp_endpoint" {
-#   description = "The IP address of PSC endpoint"
-#   value       = var.psc_allocated_ip
-# }
+output "public_ip" {
+  description = "The public IP address of Compute Instance"
+  value       = google_compute_instance.main.network_interface.0.access_config.0.nat_ip
+}
