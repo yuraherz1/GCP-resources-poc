@@ -3,7 +3,7 @@ project_id      = "infra-demo-qa"
 data_project_id = "infra-demo-dev"
 #### DB
 db_name          = "mte-data-dev"
-database_version = "POSTGRES_18"           #"MYSQL_8_0"
+database_version = "POSTGRES_18" #"MYSQL_8_0"
 disk_size        = "15"
 tier             = "db-g1-small" #"db-f1-micro" #"db-custom-2-4096"
 ip_configuration = {

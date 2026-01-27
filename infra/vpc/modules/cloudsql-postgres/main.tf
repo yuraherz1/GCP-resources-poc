@@ -10,7 +10,9 @@ resource "random_password" "db_password" {
 
 resource "google_secret_manager_secret" "db_secret" {
   secret_id = "POSTGRES_DATA_PASS"
-  replication {}
+  replication {
+    auto {}
+  }
 
   # # Optional: add labels
   # labels = {
