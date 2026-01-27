@@ -26,6 +26,7 @@ module "postgres_data" {
   db_name          = var.db_name
   db_user_name     = var.db_user_name
   database_version = var.database_version
+  db_edition       = var.db_edition
   #service_account_email_address =
 
   tier              = var.tier
