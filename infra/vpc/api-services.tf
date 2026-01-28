@@ -1,8 +1,7 @@
 locals {
   projects = {
-    var.project_id = {
+    infra-demo-dev = {
       services = [
-        "us-east-1",
         "sqladmin.googleapis.com",
         "networkconnectivity.googleapis.com",
         "compute.googleapis.com",
@@ -10,7 +9,7 @@ locals {
         "dns.googleapis.com",
       ]
     }
-    var.data_project_id = {
+    infra-demo-qa = {
       services = [
         "sqladmin.googleapis.com",
         "networkconnectivity.googleapis.com",
