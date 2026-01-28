@@ -1,7 +1,8 @@
 locals {
   projects = {
-    infra-demo-dev = {
+    "${var.project_id}" = {
       services = [
+        "us-east-1",
         "sqladmin.googleapis.com",
         "networkconnectivity.googleapis.com",
         "compute.googleapis.com",
@@ -9,7 +10,7 @@ locals {
         "dns.googleapis.com",
       ]
     }
-    infra-demo-qa = {
+    "${var.data_project_id}" = {
       services = [
         "sqladmin.googleapis.com",
         "networkconnectivity.googleapis.com",
@@ -24,7 +25,7 @@ locals {
 resource "google_project_service" "api" {
   for_each           = local.projects
   project            = each.key
-  service            = toset(each.value.services)
+  service            = each.value.services
   disable_on_destroy = false
 }
 
