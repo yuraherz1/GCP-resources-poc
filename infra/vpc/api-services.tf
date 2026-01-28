@@ -9,17 +9,17 @@ locals {
 }
 
 resource "google_project_service" "api_app" {
-  for_each           = toset(local.services)
-  project            = var.project_id
-  service            = each.key
-  disable_on_destroy = false
+  for_each = toset(local.services)
+  project  = var.project_id
+  service  = each.key
+  # disable_on_destroy = false
 }
 
 resource "google_project_service" "api_data" {
-  for_each           = toset(local.services)
-  project            = var.data_project_id
-  service            = each.key
-  disable_on_destroy = false
+  for_each = toset(local.services)
+  project  = var.data_project_id
+  service  = each.key
+  # disable_on_destroy = false
 }
 
 resource "time_sleep" "wait_for_apis" {

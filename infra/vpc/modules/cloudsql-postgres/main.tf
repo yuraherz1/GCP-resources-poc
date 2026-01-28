@@ -31,11 +31,11 @@ resource "google_secret_manager_secret_version" "db_secret_version" {
 }
 
 resource "google_sql_database_instance" "main" {
-  project          = var.project
-  name             = var.db_name
-  database_version = var.database_version
-  region           = var.region
-
+  project             = var.project
+  name                = var.db_name
+  database_version    = var.database_version
+  region              = var.region
+  deletion_protection = false
   settings {
     tier              = var.tier
     edition           = var.db_edition
