@@ -25,9 +25,9 @@ resource "google_secret_manager_secret_version" "db_secret_version" {
   secret      = google_secret_manager_secret.db_secret.id
   secret_data = random_password.db_password.result
 
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_sql_database_instance" "main" {
