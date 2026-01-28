@@ -37,6 +37,7 @@ module "postgres_data" {
     psc_enabled                   = var.ip_configuration.psc_enabled
     psc_allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
   }
+  depends_on = [time_sleep.wait_for_apis]
 }
 
 module "postgres_psc_data" {
@@ -53,6 +54,9 @@ module "postgres_psc_data" {
   dns_name                    = module.postgres_data.db_dns_name
   network_url                 = data.google_compute_network.existing_network_data.self_link
   dns_record_name             = module.postgres_data.db_dns_name
+  depends_on = [
+    time_sleep.wait_for_apis
+  ]
 }
 
 module "postgres_psc_app" {
@@ -69,6 +73,9 @@ module "postgres_psc_app" {
   dns_name                    = module.postgres_data.db_dns_name
   network_url                 = data.google_compute_network.existing_network_app.self_link
   dns_record_name             = module.postgres_data.db_dns_name
+  depends_on = [
+    time_sleep.wait_for_apis
+  ]
 }
 
 module "bastion_host_data" {
@@ -81,6 +88,9 @@ module "bastion_host_data" {
   instance_disk_size = var.instance_disk_size
   instance_disk_type = var.instance_disk_type
   instance_network   = var.instance_network
+  depends_on = [
+    time_sleep.wait_for_apis
+  ]
 }
 
 # Create the Serverless VPC Access connector
@@ -93,6 +103,9 @@ resource "google_vpc_access_connector" "sql" {
   machine_type  = var.vpc_connector_machine_type
   min_instances = var.vpc_connector_min_instances
   max_instances = var.vpc_connector_max_instances
+  depends_on = [
+    time_sleep.wait_for_apis
+  ]
 }
 
 # resource "google_compute_instance" "main" {
