@@ -37,7 +37,9 @@ module "postgres_data" {
     psc_enabled                   = var.ip_configuration.psc_enabled
     psc_allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
   }
-  depends_on = [time_sleep.wait_for_apis]
+  depends_on = [
+    time_sleep.wait_for_apis
+  ]
 }
 
 module "postgres_psc_data" {
