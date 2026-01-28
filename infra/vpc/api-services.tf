@@ -24,7 +24,7 @@ locals {
 resource "google_project_service" "api" {
   for_each           = local.projects
   project            = each.key
-  service            = each.value.services
+  service            = toset(each.value.services)
   disable_on_destroy = false
 }
 
