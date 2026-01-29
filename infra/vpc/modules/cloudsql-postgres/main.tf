@@ -60,6 +60,7 @@ resource "google_sql_database_instance" "main" {
       }
     }
     backup_configuration {
+      enabled = true
       backup_retention_settings {
         retained_backups = 3
       }
