@@ -41,18 +41,27 @@ resource "google_sql_database_instance" "main" {
     edition           = var.db_edition
     availability_type = var.availability_type
     disk_size         = var.disk_size
-    connection_pool_config {
-      flags {
-        name  = "cloudsql.iam_authentication"
-        value = "on"
-      }
+    database_flags {
+      name  = "cloudsql.iam_authentication"
+      value = "on"
     }
+    # connection_pool_config {
+    #   flags {
+    #     name  = "cloudsql.iam_authentication"
+    #     value = "on"
+    #   }
+    # }
     ip_configuration {
       ipv4_enabled                                  = var.ip_configuration.ipv4_enabled
       enable_private_path_for_google_cloud_services = true
       psc_config {
         psc_enabled               = var.ip_configuration.psc_enabled
         allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
+      }
+    }
+    backup_configuration {
+      backup_retention_settings {
+        retained_backups = 3
       }
     }
   }
