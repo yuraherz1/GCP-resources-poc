@@ -5,6 +5,7 @@ locals {
     "compute.googleapis.com",
     "vpcaccess.googleapis.com",
     "dns.googleapis.com",
+    "secretmanager.googleapis.com",
     # "serviceusage.googleapis.com",
     # "cloudresourcemanager.googleapis.com",
   ]
