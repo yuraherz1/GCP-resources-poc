@@ -48,7 +48,6 @@ variable "db_user_name" {
 variable "availability_type" {
   description = "The availability type for the master Cloud SQL instance"
   type        = string
-  default     = "REGIONAL"
 }
 
 variable "ip_configuration" {
@@ -193,10 +192,10 @@ variable "instance_disk_type" {
   type        = string
 }
 
-variable "instance_network" {
-  description = "The network name where Compute Instance located"
-  type        = string
-}
+# variable "instance_network" {
+#   description = "The network name where Compute Instance located"
+#   type        = string
+# }
 
 #Serverless VPC Access connector
 

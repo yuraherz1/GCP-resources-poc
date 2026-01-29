@@ -8,6 +8,7 @@ database_version = "POSTGRES_18" #"MYSQL_8_0"
 disk_size        = "15"
 tier             = "db-f1-micro" #"db-f1-micro" #"db-custom-2-4096" db-g1-small
 db_edition       = "ENTERPRISE"
+availability_type = "ZONAL" #REGIONAL
 ip_configuration = {
   ipv4_enabled                  = false
   psc_enabled                   = true
