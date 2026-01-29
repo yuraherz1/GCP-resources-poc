@@ -91,7 +91,7 @@ module "bastion_host_data" {
   instance_image     = var.instance_image
   instance_disk_size = var.instance_disk_size
   instance_disk_type = var.instance_disk_type
-  instance_network   = var.instance_network
+  instance_network   = var.data_psc_forwarding_network
   depends_on = [
     time_sleep.wait_for_apis
   ]

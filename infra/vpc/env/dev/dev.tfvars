@@ -36,4 +36,4 @@ instance_zone      = "europe-central2-a"
 instance_image     = "ubuntu-os-cloud/ubuntu-2404-lts-amd64"
 instance_disk_size = 10
 instance_disk_type = "pd-balanced"
-instance_network   = "default"
+# instance_network   = "default"
