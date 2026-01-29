@@ -55,7 +55,7 @@ module "postgres_psc_data" {
   psc_dns_zone_name           = var.psc_dns_zone_name
   dns_name                    = module.postgres_data.db_dns_name
   # network_url                 = data.google_compute_network.existing_network_data.self_link
-  network_url     = "projects/${var.data_project_id}/global/networks/${data_psc_forwarding_network}"
+  network_url     = "projects/${var.data_project_id}/global/networks/${var.data_psc_forwarding_network}"
   dns_record_name = module.postgres_data.db_dns_name
   depends_on = [
     time_sleep.wait_for_apis
@@ -75,7 +75,7 @@ module "postgres_psc_app" {
   psc_dns_zone_name           = var.psc_dns_zone_name
   dns_name                    = module.postgres_data.db_dns_name
   # network_url                 = data.google_compute_network.existing_network_app.self_link
-  network_url     = "projects/${var.project_id}/global/networks/${app_psc_forwarding_network}"
+  network_url     = "projects/${var.project_id}/global/networks/${var.app_psc_forwarding_network}"
   dns_record_name = module.postgres_data.db_dns_name
   depends_on = [
     time_sleep.wait_for_apis
