@@ -52,8 +52,8 @@ resource "google_sql_database_instance" "main" {
     #   }
     # }
     ip_configuration {
-      ipv4_enabled = var.ip_configuration.ipv4_enabled
-      # enable_private_path_for_google_cloud_services = true
+      ipv4_enabled                                  = var.ip_configuration.ipv4_enabled
+      enable_private_path_for_google_cloud_services = true
       psc_config {
         psc_enabled               = var.ip_configuration.psc_enabled
         allowed_consumer_projects = var.ip_configuration.psc_allowed_consumer_projects
