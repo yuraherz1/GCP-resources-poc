@@ -4,6 +4,7 @@ data_project_id = "infra-demo-dev"
 #### DB
 db_name           = "mte-data-dev"
 db_user_name      = "mte"
+db_database_name  = "mte"
 database_version  = "POSTGRES_18" #"MYSQL_8_0"
 disk_size         = "15"
 tier              = "db-f1-micro" #"db-f1-micro" #"db-custom-2-4096" db-g1-small

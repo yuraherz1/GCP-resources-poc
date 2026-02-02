@@ -74,3 +74,9 @@ resource "google_sql_user" "default" {
   instance = google_sql_database_instance.main.name
   password = random_password.db_password.result
 }
+
+resource "google_sql_database" "default" {
+  name     = var.db_database_name
+  instance = google_sql_database_instance.main.name
+}
+

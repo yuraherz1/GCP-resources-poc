@@ -25,6 +25,7 @@ module "postgres_data" {
   region           = var.region
   db_name          = var.db_name
   db_user_name     = var.db_user_name
+  db_user_database = var.db_user_database
   database_version = var.database_version
   db_edition       = var.db_edition
   #service_account_email_address =

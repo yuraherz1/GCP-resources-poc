@@ -45,6 +45,11 @@ variable "db_user_name" {
   type        = string
 }
 
+variable "db_database_name" {
+  description = "The database of Cloud SQL instance"
+  type        = string
+}
+
 variable "availability_type" {
   description = "The availability type for the master Cloud SQL instance"
   type        = string
