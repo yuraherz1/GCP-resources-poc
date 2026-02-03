@@ -65,7 +65,7 @@ substitutions:
 #   _POWER_BI_UPD_INVOKE_TOPIC: "placeholder"
 #   _MTE_APP_PROJECT_ID: "placeholder"
   # _DB_HOST: "637561f89e09.2yl4mdmmod6u5.europe-west2.sql.goog."
-  _DB_HOST: "3b3f989cce8a.16nywx20ta35q.europe-central2.sql.goog."
+  _DB_HOST: "10.186.0.12"
   _DB_USER: mte
   _DB_NAME: mte
 
