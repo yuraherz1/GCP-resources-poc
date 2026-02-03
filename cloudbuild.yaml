@@ -85,7 +85,6 @@ substitutions:
   _DB_USER: mte
   _DB_NAME: mte
   _INSTANCE_CONNECTION_NAME: "infra-demo-dev:europe-central2:mte-data-dev"
-  _
 
 availableSecrets:
   secretManager:
