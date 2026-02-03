@@ -33,15 +33,12 @@ steps:
         chmod +x cloud-sql-proxy
 
         ./cloud-sql-proxy ${_INSTANCE_CONNECTION_NAME} &
-        export PROXY_PID=$!
 
         sleep 5
 
         psql \
           "host=127.0.0.1 port=5432 dbname=${_DB_NAME} user=${_DB_USER}" \
           -c "SELECT * FROM booklets;"
-
-        kill $PROXY_PID
 
 # psql -U username -d database_name -c "SELECT * FROM booklets;"
 # psql "host=localhost dbname=yourdb user=youruser sslmode=require"
