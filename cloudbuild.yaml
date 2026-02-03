@@ -71,7 +71,7 @@ substitutions:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/nfra-demo-dev/secrets/POSTGRES_DATA_PASS/versions/latest
+    - versionName: projects/infra-demo-dev/secrets/POSTGRES_DATA_PASS/versions/latest
       env: DB_PASSWORD
 
 options:
