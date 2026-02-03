@@ -2,7 +2,7 @@ steps:
 - id: Running gce-cloud-sql-proxy
   name: gcr.io/cloud-builders/docker:latest
   script: |
-    docker run -d -v infra/vpc/configs/infra-demo-dev-b591734b59f2.json:/config/infra-demo-dev-b591734b59f2.json -p 127.0.0.1:5432:5432 \
+    docker run -d -v /infra/vpc/configs/infra-demo-dev-b591734b59f2.json:/config/infra-demo-dev-b591734b59f2.json -p 127.0.0.1:5432:5432 \
       --name cloudsql-db-proxy --network cloudbuild \
       gcr.io/cloudsql-docker/gce-proxy:1.33.1 \
       /cloud_sql_proxy -instances=infra-demo-dev:europe-central2:mte-data-dev=tcp:0.0.0.0:5432 \
