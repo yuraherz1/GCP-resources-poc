@@ -18,7 +18,8 @@ steps:
       - |
         set -e
         apt-get update
-        apt-get install -y postgresql-client
+        apt-get install -y postgresql-client inetutils-traceroute
+        traceroute 10.186.0.12
         export PGPASSWORD="$$DB_PASSWORD"
         export PGSSLMODE=require
         # psql \
