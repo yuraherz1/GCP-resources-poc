@@ -16,11 +16,11 @@ steps:
   script: |
     telnet cloudsql-db-proxy 5432
 
-- id: Stopping cloudsql-db-proxy
-   name: gcr.io/cloud-builders/docker:latest
-   script: |
-     docker stop cloudsql-db-proxy
-     docker ps
+# - id: Stopping cloudsql-db-proxy
+#    name: gcr.io/cloud-builders/docker:latest
+#    script: |
+#      docker stop cloudsql-db-proxy
+#      docker ps
 
 # steps:
 #   # **Environment variables**
