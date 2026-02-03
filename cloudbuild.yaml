@@ -17,8 +17,9 @@ steps:
       - '-c'
       - |
         set -e
+        apt-get update
+        apt install telnet -y
         telnet 10.186.0.12 5432
-        # apt-get update
         # apt-get install -y postgresql-client
         # export PGPASSWORD="$$DB_PASSWORD"
         # export PGSSLMODE=require
