@@ -89,7 +89,7 @@ availableSecrets:
       env: DB_PASSWORD
 
 options:
-  # pool:
-  #   name: 'projects/infra-demo-dev/locations/europe-central2/workerPools/444'
+  pool:
+    name: 'projects/infra-demo-dev/locations/europe-central2/workerPools/444'
   logging: CLOUD_LOGGING_ONLY
 
