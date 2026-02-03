@@ -75,7 +75,7 @@ availableSecrets:
       env: DB_PASSWORD
 
 options:
-  # pool:
-  #   name: 'projects/prj-dev-mte-data-7379/locations/europe-west2/workerPools/vpc-default-private-pool'
+  pool:
+    name: 'projects/prj-dev-mte-data-7379/locations/europe-west2/workerPools/vpc-default-private-pool'
   logging: CLOUD_LOGGING_ONLY
 
