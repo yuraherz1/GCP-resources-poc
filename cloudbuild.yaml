@@ -76,6 +76,6 @@ availableSecrets:
 
 options:
   pool:
-    name: 'projects/prj-dev-mte-data-7379/locations/europe-central2/workerPools/vpc-default-private-pool'
+    name: 'projects/infra-demo-dev/locations/europe-central2/workerPools/vpc-default-private-pool'
   logging: CLOUD_LOGGING_ONLY
 
