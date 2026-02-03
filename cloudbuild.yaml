@@ -1,83 +1,107 @@
 steps:
-  # **Environment variables**
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo "Testing connection to DB ..."
+- id: Running gce-cloud-sql-proxy
+  name: gcr.io/cloud-builders/docker:latest
+  script: |
+    docker run -d -v infra/vpc/configs:/config -p 127.0.0.1:5432:5432 \
+      --name cloudsql-db-proxy --network cloudbuild \
+      gcr.io/cloudsql-docker/gce-proxy:1.33.1 \
+      /cloud_sql_proxy -instances=infra-demo-dev:europe-central2:mte-data-dev=tcp:0.0.0.0:5432 \
+      -credential_file=/config/infra-demo-dev-b591734b59f2.json
+    sleep 20
+    docker ps -a
+    docker logs cloudsql-db-proxy
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    # pool:
-    #   name: 'projects/prj-dev-mte-data-7379/locations/europe-west2/workerPools/vpc-default-private-pool'
-    entrypoint: 'bash'
-    secretEnv:
-      - DB_PASSWORD
-    args:
-      - '-c'
-      - |
-        set -e
-        apt-get update
-        apt install telnet -y
-        telnet 10.186.0.12 5432
-        # apt-get install -y postgresql-client
-        # export PGPASSWORD="$$DB_PASSWORD"
-        # export PGSSLMODE=require
-        # psql \
-        #   -h "${_DB_HOST}" \
-        #   -U "${_DB_USER}" \
-        #   -d "${_DB_NAME}" \
-        #   -c "SELECT * FROM booklets;"
+- id: Cloudsql-test
+  name: mikesplain/telnet:latest
+  script: |
+    telnet cloudsql-db-proxy 5432
 
-# psql -U username -d database_name -c "SELECT * FROM booklets;"
-# psql "host=localhost dbname=yourdb user=youruser sslmode=require"
+- id: Stopping cloudsql-db-proxy
+   name: gcr.io/cloud-builders/docker:latest
+   script: |
+     docker stop cloudsql-db-proxy
+     docker ps
 
-substitutions:
-  _REGION: "europe-central2"
-#   _NODEJS_VER_22: "nodejs22"
-#   _CRAWLER_FUNCTION_NAME: "mteCrawler"
-#   _CATEGORIZER_FUNCTION_NAME: "mtePageCategorizer"
-#   _CALCULATOR_FUNCTION_NAME: "mteParamCalculator"
-#   _PARSER_FUNCTION_NAME: "mteParser"
-#   _SAVER_FUNCTION_NAME: "mteResultSaver"
-#   _CSV_PARSER_FUNCTION_NAME: "mteCSVParser"
-#   _RECALC_RANK_FUNCTION_NAME: "mteRecalcRank"
-#   _UPDATE_RANK_FUNCTION_NAME: "mteUpdateRank"
-#   _RANK_RECALC_PUBLISHER_FUNCTION_NAME: "mtePublishRankRecalc"
-#   _RANK_UPDATE_PUBLISHER_FUNCTION_NAME: "mtePublishRankUpdate"
-#   _SCHEDULE_PERIOD: "every 672 hours" # 24 hours x 28 days
-#   _BQ_DATASET: "mte_data"
-#   _BQ_RANKING_LIST_TABLE: "ranking_list"
-#   _BQ_RANKING_HISTORY_TABLE: "ranking_history"
-#   _BQ_SCHEDULED_QUERY: "update_drivers_rank"
-#   _FUNCTION_TIMEOUT: "1750"
-  # Environment-specific variables
-  # Default values are set for the development environment (dev)
-  # For other environments (e.g., qa, prod),
-  # override these variables at the trigger level (Substitution variables)
-  # _QUERY_PERIOD: "120"
-  # _PROJECT_ID: "prj-dev-mte-data-7379"
-  # _SERVICE_ACCOUNT: "mte-crawler-dev@prj-dev-mte-data-7379.iam.gserviceaccount.com"
-  # _ENV: "dev"
-#   _RANK_RECALC_INVOKE_TOPIC: "placeholder"
-#   _RANK_UPDATE_INVOKE_TOPIC: "placeholder"
-#   _RANK_RECALC_PUBLISH_SA: "placeholder"
-#   _RANK_UPDATE_PUBLISH_SA: "placeholder"
-#   _RANK_FUNCTIONS_SA: "placeholder"
-#   _POWER_BI_UPD_INVOKE_TOPIC: "placeholder"
-#   _MTE_APP_PROJECT_ID: "placeholder"
-  # _DB_HOST: "637561f89e09.2yl4mdmmod6u5.europe-west2.sql.goog."
-  _DB_HOST: "10.186.0.12"
-  _DB_USER: mte
-  _DB_NAME: mte
+# steps:
+#   # **Environment variables**
+#   - name: 'gcr.io/cloud-builders/gcloud'
+#     entrypoint: 'bash'
+#     args:
+#       - '-c'
+#       - |
+#         echo "Testing connection to DB ..."
 
-availableSecrets:
-  secretManager:
-    - versionName: projects/infra-demo-dev/secrets/POSTGRES_DATA_PASS/versions/latest
-      env: DB_PASSWORD
+#   - name: 'gcr.io/cloud-builders/gcloud'
+#     # pool:
+#     #   name: 'projects/prj-dev-mte-data-7379/locations/europe-west2/workerPools/vpc-default-private-pool'
+#     entrypoint: 'bash'
+#     secretEnv:
+#       - DB_PASSWORD
+#     args:
+#       - '-c'
+#       - |
+#         set -e
+#         apt-get update
+#         apt install telnet -y
+#         telnet 10.186.0.12 5432
+#         # apt-get install -y postgresql-client
+#         # export PGPASSWORD="$$DB_PASSWORD"
+#         # export PGSSLMODE=require
+#         # psql \
+#         #   -h "${_DB_HOST}" \
+#         #   -U "${_DB_USER}" \
+#         #   -d "${_DB_NAME}" \
+#         #   -c "SELECT * FROM booklets;"
+
+# # psql -U username -d database_name -c "SELECT * FROM booklets;"
+# # psql "host=localhost dbname=yourdb user=youruser sslmode=require"
+
+# substitutions:
+#   _REGION: "europe-central2"
+# #   _NODEJS_VER_22: "nodejs22"
+# #   _CRAWLER_FUNCTION_NAME: "mteCrawler"
+# #   _CATEGORIZER_FUNCTION_NAME: "mtePageCategorizer"
+# #   _CALCULATOR_FUNCTION_NAME: "mteParamCalculator"
+# #   _PARSER_FUNCTION_NAME: "mteParser"
+# #   _SAVER_FUNCTION_NAME: "mteResultSaver"
+# #   _CSV_PARSER_FUNCTION_NAME: "mteCSVParser"
+# #   _RECALC_RANK_FUNCTION_NAME: "mteRecalcRank"
+# #   _UPDATE_RANK_FUNCTION_NAME: "mteUpdateRank"
+# #   _RANK_RECALC_PUBLISHER_FUNCTION_NAME: "mtePublishRankRecalc"
+# #   _RANK_UPDATE_PUBLISHER_FUNCTION_NAME: "mtePublishRankUpdate"
+# #   _SCHEDULE_PERIOD: "every 672 hours" # 24 hours x 28 days
+# #   _BQ_DATASET: "mte_data"
+# #   _BQ_RANKING_LIST_TABLE: "ranking_list"
+# #   _BQ_RANKING_HISTORY_TABLE: "ranking_history"
+# #   _BQ_SCHEDULED_QUERY: "update_drivers_rank"
+# #   _FUNCTION_TIMEOUT: "1750"
+#   # Environment-specific variables
+#   # Default values are set for the development environment (dev)
+#   # For other environments (e.g., qa, prod),
+#   # override these variables at the trigger level (Substitution variables)
+#   # _QUERY_PERIOD: "120"
+#   # _PROJECT_ID: "prj-dev-mte-data-7379"
+#   # _SERVICE_ACCOUNT: "mte-crawler-dev@prj-dev-mte-data-7379.iam.gserviceaccount.com"
+#   # _ENV: "dev"
+# #   _RANK_RECALC_INVOKE_TOPIC: "placeholder"
+# #   _RANK_UPDATE_INVOKE_TOPIC: "placeholder"
+# #   _RANK_RECALC_PUBLISH_SA: "placeholder"
+# #   _RANK_UPDATE_PUBLISH_SA: "placeholder"
+# #   _RANK_FUNCTIONS_SA: "placeholder"
+# #   _POWER_BI_UPD_INVOKE_TOPIC: "placeholder"
+# #   _MTE_APP_PROJECT_ID: "placeholder"
+#   # _DB_HOST: "637561f89e09.2yl4mdmmod6u5.europe-west2.sql.goog."
+#   _DB_HOST: "10.186.0.12"
+#   _DB_USER: mte
+#   _DB_NAME: mte
+
+# availableSecrets:
+#   secretManager:
+#     - versionName: projects/infra-demo-dev/secrets/POSTGRES_DATA_PASS/versions/latest
+#       env: DB_PASSWORD
 
 options:
-  pool:
-    name: 'projects/infra-demo-dev/locations/europe-central2/workerPools/444'
+  # pool:
+  #   name: 'projects/infra-demo-dev/locations/europe-central2/workerPools/444'
   logging: CLOUD_LOGGING_ONLY
 
