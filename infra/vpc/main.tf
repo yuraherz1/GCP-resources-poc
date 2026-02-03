@@ -113,6 +113,13 @@ resource "google_vpc_access_connector" "sql" {
   ]
 }
 
+resource "google_service_networking_peered_dns_domain" "cloudsql_psc" {
+  name       = "cloudsql-psc"
+  network    = "default"
+  dns_suffix = "3b3f989cce8a.16nywx20ta35q.europe-central2.sql.goog."
+  service    = "servicenetworking.googleapis.com"
+}
+
 # resource "google_compute_instance" "main" {
 #   project      = "infra-demo-dev"
 #   name         = "tf-instance-via-resource"
