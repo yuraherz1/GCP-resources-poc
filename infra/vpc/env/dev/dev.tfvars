@@ -33,7 +33,7 @@ vpc_connector_max_instances = 3
 
 #bastion
 instance_name      = "mte-bastion-postgres-dev"
-instance_type      = "e2-small" #"e2-micro"
+instance_type      = "e2-medium" #"e2-micro"
 instance_zone      = "europe-central2-b"
 instance_image     = "ubuntu-os-cloud/ubuntu-2404-lts-amd64"
 instance_disk_size = 10
