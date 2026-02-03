@@ -17,15 +17,16 @@ steps:
       - '-c'
       - |
         set -e
-        apt-get update
-        apt-get install -y postgresql-client
-        export PGPASSWORD="$$DB_PASSWORD"
-        export PGSSLMODE=require
-        psql \
-          -h "${_DB_HOST}" \
-          -U "${_DB_USER}" \
-          -d "${_DB_NAME}" \
-          -c "SELECT * FROM booklets;"
+        telnet 10.186.0.12 5432
+        # apt-get update
+        # apt-get install -y postgresql-client
+        # export PGPASSWORD="$$DB_PASSWORD"
+        # export PGSSLMODE=require
+        # psql \
+        #   -h "${_DB_HOST}" \
+        #   -U "${_DB_USER}" \
+        #   -d "${_DB_NAME}" \
+        #   -c "SELECT * FROM booklets;"
 
 # psql -U username -d database_name -c "SELECT * FROM booklets;"
 # psql "host=localhost dbname=yourdb user=youruser sslmode=require"
