@@ -113,12 +113,27 @@ resource "google_vpc_access_connector" "sql" {
   ]
 }
 
-resource "google_service_networking_peered_dns_domain" "cloudsql_psc" {
-  name       = "cloudsql-psc"
-  network    = "default"
-  dns_suffix = "3b3f989cce8a.16nywx20ta35q.europe-central2.sql.goog."
-  service    = "servicenetworking.googleapis.com"
+# Create the Serverless VPC Access connector
+resource "google_vpc_access_connector" "sql-data" {
+  region        = var.region
+  project       = var.data_project_id
+  name          = "data-${var.vpc_connector_name}"
+  ip_cidr_range = "10.10.11.0/28"
+  network       = var.data_psc_forwarding_network
+  machine_type  = var.vpc_connector_machine_type
+  min_instances = var.vpc_connector_min_instances
+  max_instances = var.vpc_connector_max_instances
+  depends_on = [
+    time_sleep.wait_for_apis
+  ]
 }
+
+# resource "google_service_networking_peered_dns_domain" "cloudsql_psc" {
+#   name       = "cloudsql-psc"
+#   network    = "default"
+#   dns_suffix = "3b3f989cce8a.16nywx20ta35q.europe-central2.sql.goog."
+#   service    = "servicenetworking.googleapis.com"
+# }
 
 # resource "google_compute_instance" "main" {
 #   project      = "infra-demo-dev"
