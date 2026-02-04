@@ -114,10 +114,10 @@ resource "google_vpc_access_connector" "sql" {
 }
 
 # Create the Serverless VPC Access connector
-resource "google_vpc_access_connector" "sql-data" {
+resource "google_vpc_access_connector" "sql_data" {
   region        = var.region
   project       = var.data_project_id
-  name          = "data-${var.vpc_connector_name}"
+  name          = "data-dev"
   ip_cidr_range = "10.10.11.0/28"
   network       = var.data_psc_forwarding_network
   machine_type  = var.vpc_connector_machine_type
